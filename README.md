@@ -1,3 +1,3 @@
 ERD
 
-![Снимок экрана 2024-04-14 в 01.08.28.png](..%2F..%2FDesktop%2F%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202024-04-14%20%D0%B2%2001.08.28.png)
+![alt text](https://i.ibb.co.com/DL76czJ/2024-04-14-01-08-28.png)
