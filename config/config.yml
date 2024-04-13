@@ -1,0 +1,8 @@
+http:
+  port: '8080'
+
+
+postgres:
+  pg_url: 'postgres://postgres:password@localhost:5432/postgres'
+
+
