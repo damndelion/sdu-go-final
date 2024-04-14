@@ -11,6 +11,7 @@ type (
 	Config struct {
 		HTTP `yaml:"http"`
 		PG   `yaml:"postgres"`
+		JWT  `yaml:"jwt"`
 	}
 
 	// HTTP -.
@@ -21,6 +22,12 @@ type (
 	// PG -.
 	PG struct {
 		URL string `env-required:"true" yaml:"pg_url" env:"PG_URL"`
+	}
+
+	// JWT -.
+	JWT struct {
+		SecretKey      string `mapstructure:"secret_key" yaml:"secret_key"`
+		AccessTokenTTL int64  `mapstructure:"access_token_ttl" yaml:"access_token_ttl"`
 	}
 )
 
