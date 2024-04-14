@@ -11,7 +11,7 @@ type UserUseCase struct {
 	repo UserRepo
 }
 
-func New(r UserRepo) *UserUseCase {
+func NewUserUseCase(r UserRepo) *UserUseCase {
 	return &UserUseCase{
 		repo: r,
 	}

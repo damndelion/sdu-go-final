@@ -2,6 +2,7 @@
 package http
 
 import (
+	"github.com/evrone/go-clean-template/config"
 	"github.com/sirupsen/logrus"
 	"net/http"
 
@@ -22,7 +23,7 @@ import (
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /api
-func NewRouter(handler *gin.Engine, l *logrus.Logger, t usecase.User) {
+func NewRouter(handler *gin.Engine, l *logrus.Logger, u usecase.User, a usecase.Auth, cfg *config.Config) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
@@ -40,6 +41,7 @@ func NewRouter(handler *gin.Engine, l *logrus.Logger, t usecase.User) {
 	// Routers
 	h := handler.Group("/api")
 	{
-		newTranslationRoutes(h, t, l)
+		newUserRoutes(h, u, l, cfg.JWT.SecretKey)
+		newAuthRoutes(h, a, l)
 	}
 }

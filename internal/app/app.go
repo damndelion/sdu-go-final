@@ -37,13 +37,17 @@ func Run(cfg *config.Config) {
 	}
 
 	// Use case
-	userUseCase := usecase.New(
+	userUseCase := usecase.NewUserUseCase(
+		repo.New(db),
+	)
+	authUseCase := usecase.NewAuthUseCase(
+		cfg,
 		repo.New(db),
 	)
 
 	// HTTP Server
 	handler := gin.New()
-	v1.NewRouter(handler, log, userUseCase)
+	v1.NewRouter(handler, log, userUseCase, authUseCase, cfg)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal

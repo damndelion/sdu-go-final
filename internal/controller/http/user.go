@@ -1,6 +1,7 @@
 package http
 
 import (
+	"github.com/evrone/go-clean-template/internal/controller/middleware"
 	"github.com/sirupsen/logrus"
 	"net/http"
 
@@ -14,11 +15,12 @@ type userRoutes struct {
 	l *logrus.Logger
 }
 
-func newTranslationRoutes(handler *gin.RouterGroup, t usecase.User, l *logrus.Logger) {
+func newUserRoutes(handler *gin.RouterGroup, t usecase.User, l *logrus.Logger, key string) {
 	r := &userRoutes{t, l}
 
 	h := handler.Group("/user")
 	{
+		h.Use(middleware.JwtVerify(key))
 		h.GET("/all", r.getAll)
 
 	}
