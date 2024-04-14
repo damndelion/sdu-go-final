@@ -2,10 +2,6 @@ http:
   port: '8080'
 
 
-postgres:
-  pg_url: 'postgres://postgres:password@localhost:5432/postgres'
-
-
 jwt:
   secret_key: 'superSecretKey'
   access_token_ttl: 3600

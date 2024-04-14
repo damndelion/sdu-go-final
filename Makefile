@@ -1,10 +1,10 @@
 compose-up: ### Run docker-compose
-	docker-compose up --build -d postgres rabbitmq && docker-compose logs -f
+	docker-compose up
 .PHONY: compose-up
 
-compose-down: ### Down docker-compose
-	docker-compose down --remove-orphans
-.PHONY: compose-down
+build-app: ### Build docker image of application
+	docker build -t app .
+.PHONY: build-app
 
 swag-v1: ### swag init
 	swag init -g internal/controller/http/router.go

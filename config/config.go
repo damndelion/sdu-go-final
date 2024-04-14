@@ -21,7 +21,7 @@ type (
 
 	// PG -.
 	PG struct {
-		URL string `env-required:"true" yaml:"pg_url" env:"PG_URL"`
+		URL string `env-required:"true" env:"PG_URL"`
 	}
 
 	// JWT -.
