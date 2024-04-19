@@ -1,8 +1,8 @@
-// Package v1 implements routing paths. Each services in own file.
 package http
 
 import (
 	"github.com/damndelion/sdu-go-final/config"
+	"github.com/damndelion/sdu-go-final/internal/cache"
 	"github.com/sirupsen/logrus"
 	"net/http"
 
@@ -23,7 +23,7 @@ import (
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /api
-func NewRouter(handler *gin.Engine, l *logrus.Logger, u usecase.User, a usecase.Auth, cfg *config.Config) {
+func NewRouter(handler *gin.Engine, l *logrus.Logger, u usecase.User, a usecase.Auth, cfg *config.Config, cache cache.UserCacheInterface) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
@@ -41,7 +41,7 @@ func NewRouter(handler *gin.Engine, l *logrus.Logger, u usecase.User, a usecase.
 	// Routers
 	h := handler.Group("/api")
 	{
-		newUserRoutes(h, u, l, cfg.JWT.SecretKey)
+		newUserRoutes(h, u, l, cfg.JWT.SecretKey, cache)
 		newAuthRoutes(h, a, l)
 	}
 }

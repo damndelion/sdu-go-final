@@ -4,12 +4,15 @@ package app
 import (
 	"fmt"
 	"github.com/damndelion/sdu-go-final/config"
+	userCache "github.com/damndelion/sdu-go-final/internal/cache"
 	"github.com/damndelion/sdu-go-final/internal/controller/http"
 	"github.com/damndelion/sdu-go-final/internal/entity"
 	"github.com/damndelion/sdu-go-final/internal/usecase"
 	"github.com/damndelion/sdu-go-final/internal/usecase/repo"
+	"github.com/damndelion/sdu-go-final/pkg/cache"
 	"github.com/damndelion/sdu-go-final/pkg/httpserver"
 	"github.com/damndelion/sdu-go-final/pkg/postgres"
+	"time"
 
 	"os"
 	"os/signal"
@@ -46,9 +49,13 @@ func Run(cfg *config.Config) {
 		repo.New(db),
 	)
 
+	// Redis
+	redisClient, err := cache.NewRedisClient(cfg.Redis.Host)
+	userCacheInterface := userCache.NewUserCache(redisClient, 10*time.Minute)
+
 	// HTTP Server
 	handler := gin.New()
-	http.NewRouter(handler, log, userUseCase, authUseCase, cfg)
+	http.NewRouter(handler, log, userUseCase, authUseCase, cfg, userCacheInterface)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal

@@ -8,12 +8,18 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
   app:
     build: .
     container_name: app
     image: app
     environment:
       PG_URL: 'postgres://postgres:password@postgres/postgres'
+      REDIS_URL: 'redis:6379'
     ports:
       - 8080:8080
     depends_on:
