@@ -1,12 +1,14 @@
 version: '3.8'
 services:
-
   postgres:
-    image: postgres:latest
+    image: postgres:16
     environment:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
+    volumes:
+      - go-final-postgres-data:/var/lib/postgresql/data
+
 
   app:
     build: .
@@ -20,4 +22,4 @@ services:
       - postgres
 
 volumes:
-  pg-data:
+  go-final-postgres-data:
