@@ -9,9 +9,10 @@ import (
 type (
 	// Config -.
 	Config struct {
-		HTTP `yaml:"http"`
-		PG   `yaml:"postgres"`
-		JWT  `yaml:"jwt"`
+		HTTP  `yaml:"http"`
+		PG    `yaml:"postgres"`
+		JWT   `yaml:"jwt"`
+		Redis `yaml:"redis"`
 	}
 
 	// HTTP -.
@@ -28,6 +29,12 @@ type (
 	JWT struct {
 		SecretKey      string `mapstructure:"secret_key" yaml:"secret_key"`
 		AccessTokenTTL int64  `mapstructure:"access_token_ttl" yaml:"access_token_ttl"`
+	}
+
+	// Redis -.
+	Redis struct {
+		Host string `env:"REDIS_URL"`
+		Exp  int    `env-required:"true" yaml:"exp"`
 	}
 )
 

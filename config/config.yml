@@ -5,3 +5,6 @@ http:
 jwt:
   secret_key: 'superSecretKey'
   access_token_ttl: 3600
+
+redis:
+  exp: 10
