@@ -3,8 +3,8 @@ package usecase
 
 import (
 	"context"
-	"github.com/evrone/go-clean-template/internal/controller/http/dto"
-	"github.com/evrone/go-clean-template/internal/entity"
+	"github.com/damndelion/sdu-go-final/internal/controller/http/dto"
+	"github.com/damndelion/sdu-go-final/internal/entity"
 )
 
 type (

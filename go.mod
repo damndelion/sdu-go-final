@@ -1,4 +1,4 @@
-module github.com/evrone/go-clean-template
+module github.com/damndelion/sdu-go-final
 
 go 1.22.2
 

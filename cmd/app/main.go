@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/evrone/go-clean-template/config"
-	"github.com/evrone/go-clean-template/internal/app"
+	"github.com/damndelion/sdu-go-final/config"
+	"github.com/damndelion/sdu-go-final/internal/app"
 	"github.com/sirupsen/logrus"
 )
 

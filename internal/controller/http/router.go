@@ -2,7 +2,7 @@
 package http
 
 import (
-	"github.com/evrone/go-clean-template/config"
+	"github.com/damndelion/sdu-go-final/config"
 	"github.com/sirupsen/logrus"
 	"net/http"
 
@@ -12,8 +12,8 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	// Swagger docs.
-	_ "github.com/evrone/go-clean-template/docs"
-	"github.com/evrone/go-clean-template/internal/usecase"
+	_ "github.com/damndelion/sdu-go-final/docs"
+	"github.com/damndelion/sdu-go-final/internal/usecase"
 )
 
 // NewRouter -.

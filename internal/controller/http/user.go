@@ -1,13 +1,13 @@
 package http
 
 import (
-	"github.com/evrone/go-clean-template/internal/controller/middleware"
+	"github.com/damndelion/sdu-go-final/internal/controller/middleware"
 	"github.com/sirupsen/logrus"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/evrone/go-clean-template/internal/usecase"
+	"github.com/damndelion/sdu-go-final/internal/usecase"
 )
 
 type userRoutes struct {

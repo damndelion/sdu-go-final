@@ -6,7 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
-	"github.com/evrone/go-clean-template/internal/entity"
+	"github.com/damndelion/sdu-go-final/internal/entity"
 )
 
 type UserRepo struct {

@@ -3,19 +3,20 @@ package app
 
 import (
 	"fmt"
-	v1 "github.com/evrone/go-clean-template/internal/controller/http"
-	"github.com/evrone/go-clean-template/internal/entity"
+	"github.com/damndelion/sdu-go-final/config"
+	"github.com/damndelion/sdu-go-final/internal/controller/http"
+	"github.com/damndelion/sdu-go-final/internal/entity"
+	"github.com/damndelion/sdu-go-final/internal/usecase"
+	"github.com/damndelion/sdu-go-final/internal/usecase/repo"
+	"github.com/damndelion/sdu-go-final/pkg/httpserver"
+	"github.com/damndelion/sdu-go-final/pkg/postgres"
+
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/evrone/go-clean-template/config"
-	"github.com/evrone/go-clean-template/internal/usecase"
-	"github.com/evrone/go-clean-template/internal/usecase/repo"
-	"github.com/evrone/go-clean-template/pkg/httpserver"
-	"github.com/evrone/go-clean-template/pkg/postgres"
 	"github.com/sirupsen/logrus"
 )
 
@@ -47,7 +48,7 @@ func Run(cfg *config.Config) {
 
 	// HTTP Server
 	handler := gin.New()
-	v1.NewRouter(handler, log, userUseCase, authUseCase, cfg)
+	http.NewRouter(handler, log, userUseCase, authUseCase, cfg)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal

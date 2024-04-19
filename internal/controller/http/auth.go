@@ -2,8 +2,9 @@ package http
 
 import (
 	"fmt"
-	"github.com/evrone/go-clean-template/internal/controller/http/dto"
-	"github.com/evrone/go-clean-template/internal/usecase"
+	"github.com/damndelion/sdu-go-final/internal/controller/http/dto"
+	"github.com/damndelion/sdu-go-final/internal/usecase"
+
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
