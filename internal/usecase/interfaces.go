@@ -23,4 +23,17 @@ type (
 		Register(ctx context.Context, name, email, password string) error
 		Login(ctx context.Context, email, password string) (*dto.LoginResponse, error)
 	}
+
+	Menu interface {
+		GetMenu(ctx context.Context) ([]entity.Menu, error)
+		CreateMenuItem(ctx context.Context, item dto.CreateMenuItem) (id string, err error)
+		UpdateMenuItem(ctx context.Context, item dto.UpdateMenuItem) (id string, err error)
+		DeleteMenuItem(ctx context.Context, id string) error
+	}
+	MenuRepo interface {
+		GetAllMenu(ctx context.Context) (users []entity.Menu, err error)
+		CreateMenuItem(ctx context.Context, item dto.CreateMenuItem) (id string, err error)
+		UpdateMenuItem(ctx context.Context, item dto.UpdateMenuItem) (id string, err error)
+		DeleteMenuItem(ctx context.Context, id string) error
+	}
 )

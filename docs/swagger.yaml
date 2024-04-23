@@ -1,11 +1,22 @@
 basePath: /api
 definitions:
+  entity.Menu:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+    type: object
   entity.User:
     properties:
       email:
         type: string
       id:
-        type: integer
+        type: string
       name:
         type: string
       password:
@@ -26,6 +37,80 @@ info:
   title: Go Clean Template API
   version: "1.0"
 paths:
+  /menu:
+    delete:
+      consumes:
+      - application/json
+      description: Delete menu item
+      operationId: Menu-delete
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Delete menu item
+      tags:
+      - Menu
+    post:
+      consumes:
+      - application/json
+      description: Create menu item
+      operationId: Menu-create
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Create menu item
+      tags:
+      - Menu
+    put:
+      consumes:
+      - application/json
+      description: Update menu item
+      operationId: Menu-update
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Update menu item
+      tags:
+      - Menu
+  /menu/all:
+    get:
+      consumes:
+      - application/json
+      description: Show menu
+      operationId: Menu-all
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Menu'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Get menu
+      tags:
+      - Menu
   /user/all:
     get:
       consumes:

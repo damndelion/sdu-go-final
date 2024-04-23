@@ -13,8 +13,8 @@ type UserRepo struct {
 	db *gorm.DB
 }
 
-// New -.
-func New(pg *gorm.DB) *UserRepo {
+// NewUserRepo -.
+func NewUserRepo(pg *gorm.DB) *UserRepo {
 	return &UserRepo{pg}
 }
 
@@ -52,13 +52,13 @@ func (r *UserRepo) CreateUser(ctx context.Context, user *entity.User) (string, e
 		return "", err
 	}
 
-	user_uuid, err := uuid.NewRandom()
+	userUuid, err := uuid.NewRandom()
 	if err != nil {
 		return "", err
 	}
 
 	newUser := entity.User{
-		ID:       user_uuid.String(),
+		ID:       userUuid.String(),
 		Name:     user.Name,
 		Email:    user.Email,
 		Password: string(generatedHash),
@@ -70,5 +70,5 @@ func (r *UserRepo) CreateUser(ctx context.Context, user *entity.User) (string, e
 		return "", res.Error
 	}
 
-	return user_uuid.String(), nil
+	return userUuid.String(), nil
 }

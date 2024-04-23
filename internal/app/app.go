@@ -31,7 +31,7 @@ func Run(cfg *config.Config) {
 	}
 	defer postgres.Close(db)
 
-	err = db.AutoMigrate(&entity.User{})
+	err = db.AutoMigrate(&entity.User{}, &entity.Menu{})
 	if err != nil {
 		log.Error("failed to migrate")
 		return
@@ -39,16 +39,19 @@ func Run(cfg *config.Config) {
 
 	// Use case
 	userUseCase := usecase.NewUserUseCase(
-		repo.New(db),
+		repo.NewUserRepo(db),
 	)
 	authUseCase := usecase.NewAuthUseCase(
 		cfg,
-		repo.New(db),
+		repo.NewUserRepo(db),
+	)
+	menuUseCase := usecase.NewMenuUseCase(
+		repo.NewMenuRepo(db),
 	)
 
 	// HTTP Server
 	handler := gin.New()
-	http.NewRouter(handler, log, userUseCase, authUseCase, cfg)
+	http.NewRouter(handler, log, userUseCase, authUseCase, menuUseCase, cfg)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal
