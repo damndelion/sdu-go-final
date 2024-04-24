@@ -26,6 +26,15 @@ func newAuthRoutes(handler *gin.RouterGroup, u usecase.Auth, l *logrus.Logger) {
 	}
 }
 
+// Register @Summary     Register
+// @Description Register
+// @ID          Auth-Register
+// @Tags  	    Auth
+// @Accept      json
+// @Produce     json
+// @Success     200
+// @Failure     500
+// @Router      /auth/register [post]
 func (r *authRoutes) Register(ctx *gin.Context) {
 	var registerRequest dto.RegisterRequest
 	err := ctx.ShouldBindJSON(&registerRequest)
@@ -47,6 +56,15 @@ func (r *authRoutes) Register(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"message": "user successfully registered"})
 }
 
+// Login @Summary     Login
+// @Description Login
+// @ID          Auth-Login
+// @Tags  	    Auth
+// @Accept      json
+// @Produce     json
+// @Success     200 {object} string
+// @Failure     500
+// @Router      /auth/login [post]
 func (r *authRoutes) Login(ctx *gin.Context) {
 	var loginRequest dto.LoginRequest
 	err := ctx.ShouldBindJSON(&loginRequest)
