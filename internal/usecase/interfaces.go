@@ -36,4 +36,11 @@ type (
 		UpdateMenuItem(ctx context.Context, item dto.UpdateMenuItem) (id string, err error)
 		DeleteMenuItem(ctx context.Context, id string) error
 	}
+
+	Order interface {
+		GetAllOrder(ctx context.Context) (users []entity.Order, err error)
+		CreateOrderItem(ctx context.Context, item dto.CreateMenuItem) (id string, err error)
+		UpdateOderItem(ctx context.Context, item dto.UpdateMenuItem) (id string, err error)
+		DeleteOrderItem(ctx context.Context, id string) error
+	}
 )
