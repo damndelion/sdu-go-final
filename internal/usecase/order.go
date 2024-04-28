@@ -18,37 +18,37 @@ func NewOrderUseCase(r OderRepo) *OrderUseCase {
 	}
 }
 
-func (mc *MenuUseCase) GetOrder(ctx context.Context) ([]entity.Order, error) {
-	menu, err := mc.repo.GetAllMenu(ctx)
+func (mc *OrderUseCase) GetOrder(ctx context.Context) ([]entity.Order, error) {
+	order, err := mc.repo.GetAllOrder(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("MenuUseCase - GetMenu: %w", err)
+		return nil, fmt.Errorf("OrderUseCase - GetOrder: %w", err)
 	}
 
-	return menu, nil
+	return order, nil
 }
 
-func (mc *MenuUseCase) CreateMenuItem(ctx context.Context, item dto.CreateMenuItem) (id string, err error) {
-	menu, err := mc.repo.CreateMenuItem(ctx, item)
+func (mc *OrderUseCase) CreateOrderItem(ctx context.Context, item dto.CreateOderItem) (id string, err error) {
+	order, err := mc.repo.CreateOrderItem(ctx, item)
 	if err != nil {
-		return "", fmt.Errorf("MenuUseCase - CreateMenuItem: %w", err)
+		return "", fmt.Errorf("OrderUseCase - CreateOrderItem: %w", err)
 	}
 
-	return menu, nil
+	return order, nil
 }
 
-func (mc *MenuUseCase) UpdateMenuItem(ctx context.Context, item dto.UpdateMenuItem) (id string, err error) {
-	menu, err := mc.repo.UpdateMenuItem(ctx, item)
+func (mc *OrderUseCase) UpdateOrderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error) {
+	order, err := mc.repo.UpdateOrderItem(ctx, item)
 	if err != nil {
-		return "", fmt.Errorf("MenuUseCase - UpdateMenuItem: %w", err)
+		return "", fmt.Errorf("OrderUseCase - UpdateOrderItem: %w", err)
 	}
 
-	return menu, nil
+	return order, nil
 }
 
-func (mc *MenuUseCase) DeleteMenuItem(ctx context.Context, id string) error {
-	err := mc.repo.DeleteMenuItem(ctx, id)
+func (mc *OrderUseCase) DeleteOrderItem(ctx context.Context, id string) error {
+	err := mc.repo.DeleteOrderItem(ctx, id)
 	if err != nil {
-		return fmt.Errorf("MenuUseCase - DeleteMenuItme: %w", err)
+		return fmt.Errorf("OrderUseCase - DeleteOrderItem: %w", err)
 	}
 
 	return nil

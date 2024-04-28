@@ -38,7 +38,7 @@ type (
 	}
 
 	Order interface {
-		GetAllOrder(ctx context.Context) (users []entity.Order, err error)
+		GetOrder(ctx context.Context) (users []entity.Order, err error)
 		CreateOrderItem(ctx context.Context, item dto.CreateOderItem) (id string, err error)
 		UpdateOderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error)
 		DeleteOrderItem(ctx context.Context, id string) error

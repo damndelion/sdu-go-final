@@ -19,7 +19,7 @@ func NewOderRepo(pg *gorm.DB) *OrderRepo {
 	return &OrderRepo{pg}
 }
 
-func (r *OrderRepo) GetAllMenu(ctx context.Context) (order []entity.Order, err error) {
+func (r *OrderRepo) GetAllOrder(ctx context.Context) (order []entity.Order, err error) {
 	res := r.db.Find(&order)
 	if res.Error != nil {
 		return nil, res.Error
@@ -43,9 +43,6 @@ func (r *OrderRepo) CreateOrderItem(ctx context.Context, item dto.CreateOderItem
 	}
 	res := r.db.Create(&order)
 	if res.Error != nil {
-		if errors.Is(res.Error, gorm.ErrDuplicatedKey) {
-			return "", errors.New("order with that name already exists")
-		}
 		return "", res.Error
 	}
 

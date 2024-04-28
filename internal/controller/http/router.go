@@ -44,6 +44,7 @@ func NewRouter(handler *gin.Engine, l *logrus.Logger, o usecase.Order, u usecase
 		newUserRoutes(h, u, l, cfg.JWT.SecretKey)
 		newAuthRoutes(h, a, l)
 		newMenuRoutes(h, m, l, cfg.JWT.SecretKey)
+		newOrderRoutes(h, o, l, cfg.JWT.SecretKey)
 
 	}
 }
