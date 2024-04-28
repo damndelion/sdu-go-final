@@ -63,16 +63,16 @@ func (r *OrderRepo) UpdateOrderItem(ctx context.Context, item dto.UpdateOrderIte
 	res := r.db.Model(&order).Where("id = ?", item.ID).Updates(&order)
 	if res.Error != nil {
 		if errors.Is(res.Error, gorm.ErrDuplicatedKey) {
-			return "", errors.New("menu with that name already exists")
+			return "", errors.New("order with that name already exists")
 		}
 		return "", res.Error
 	}
 
-	return item.Name, nil
+	return item.Status, nil
 }
 
 func (r *MenuRepo) DeleteOrderItem(ctx context.Context, id string) error {
-	res := r.db.Model(&entity.Menu{}).Where("id = ?", id).Delete(&entity.Menu{})
+	res := r.db.Model(&entity.Order{}).Where("id = ?", id).Delete(&entity.Order{})
 	if res.Error != nil {
 		return res.Error
 	}

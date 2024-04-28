@@ -9,16 +9,16 @@ import (
 )
 
 type OrderUseCase struct {
-	repo MenuRepo
+	repo OderRepo
 }
 
-func NewOrderUseCase(r MenuRepo) *MenuUseCase {
-	return &MenuUseCase{
+func NewOrderUseCase(r OderRepo) *OrderUseCase {
+	return &OrderUseCase{
 		repo: r,
 	}
 }
 
-func (mc *MenuUseCase) GetMenu(ctx context.Context) ([]entity.Menu, error) {
+func (mc *MenuUseCase) GetOrder(ctx context.Context) ([]entity.Order, error) {
 	menu, err := mc.repo.GetAllMenu(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("MenuUseCase - GetMenu: %w", err)
