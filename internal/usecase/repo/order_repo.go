@@ -1,11 +1,13 @@
 package repo
 
+import "C"
 import (
 	"context"
 	"errors"
 	"github.com/damndelion/sdu-go-final/internal/controller/http/dto"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"time"
 
 	"github.com/damndelion/sdu-go-final/internal/entity"
 )
@@ -14,7 +16,7 @@ type OrderRepo struct {
 	db *gorm.DB
 }
 
-// NewOrderRepo
+// NewOderRepo
 func NewOderRepo(pg *gorm.DB) *OrderRepo {
 	return &OrderRepo{pg}
 }
@@ -28,17 +30,22 @@ func (r *OrderRepo) GetAllOrder(ctx context.Context) (order []entity.Order, err 
 	return order, nil
 }
 
-func (r *OrderRepo) CreateOrderItem(ctx context.Context, item dto.CreateOderItem) (id string, err error) {
+func (r *OrderRepo) CreateOrderItem(ctx context.Context, item dto.CreateOrderItemRequest, userID string) (id string, err error) {
 	orderUuid, err := uuid.NewRandom()
+	var orderItemData dto.CreateOrderItemRequest
+	totalPrice := 0
+	for _, item := range orderItemData.Items {
+		totalPrice += item.Price
+	}
 	if err != nil {
 		return "", err
 	}
 	order := entity.Order{
 		ID:          orderUuid.String(),
-		UserID:      item.UserID,
-		Status:      item.Status,
-		TotalPrice:  item.TotalPrice,
-		Timestamp:   item.Timestamp,
+		UserID:      userID,
+		Status:      "crated",
+		TotalPrice:  totalPrice,
+		Timestamp:   time.Now(),
 		PaymentType: item.PaymentType,
 	}
 	res := r.db.Create(&order)
@@ -46,7 +53,7 @@ func (r *OrderRepo) CreateOrderItem(ctx context.Context, item dto.CreateOderItem
 		return "", res.Error
 	}
 
-	return item.Status, nil
+	return order.ID, nil
 }
 
 func (r *OrderRepo) UpdateOrderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error) {
@@ -68,7 +75,7 @@ func (r *OrderRepo) UpdateOrderItem(ctx context.Context, item dto.UpdateOrderIte
 	return item.Status, nil
 }
 
-func (r *MenuRepo) DeleteOrderItem(ctx context.Context, id string) error {
+func (r *OrderRepo) DeleteOrderItem(ctx context.Context, id string) error {
 	res := r.db.Model(&entity.Order{}).Where("id = ?", id).Delete(&entity.Order{})
 	if res.Error != nil {
 		return res.Error

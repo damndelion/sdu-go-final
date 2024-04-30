@@ -49,9 +49,13 @@ func Run(cfg *config.Config) {
 		repo.NewMenuRepo(db),
 	)
 
+	orderUseCase := usecase.NewOrderUseCase(
+		repo.NewOderRepo(db),
+	)
+
 	// HTTP Server
 	handler := gin.New()
-	http.NewRouter(handler, log, userUseCase, authUseCase, menuUseCase, cfg)
+	http.NewRouter(handler, log, orderUseCase, userUseCase, authUseCase, menuUseCase, cfg)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal

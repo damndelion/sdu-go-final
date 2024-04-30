@@ -27,8 +27,8 @@ func (mc *OrderUseCase) GetOrder(ctx context.Context) ([]entity.Order, error) {
 	return order, nil
 }
 
-func (mc *OrderUseCase) CreateOrderItem(ctx context.Context, item dto.CreateOderItem) (id string, err error) {
-	order, err := mc.repo.CreateOrderItem(ctx, item)
+func (mc *OrderUseCase) CreateOrderItem(ctx context.Context, item dto.CreateOrderItemRequest, userId string) (id string, err error) {
+	order, err := mc.repo.CreateOrderItem(ctx, item, userId)
 	if err != nil {
 		return "", fmt.Errorf("OrderUseCase - CreateOrderItem: %w", err)
 	}

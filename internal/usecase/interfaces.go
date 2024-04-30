@@ -39,14 +39,14 @@ type (
 
 	Order interface {
 		GetOrder(ctx context.Context) (users []entity.Order, err error)
-		CreateOrderItem(ctx context.Context, item dto.CreateOderItem) (id string, err error)
-		UpdateOderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error)
+		CreateOrderItem(ctx context.Context, item dto.CreateOrderItemRequest, userID string) (id string, err error)
+		UpdateOrderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error)
 		DeleteOrderItem(ctx context.Context, id string) error
 	}
 
 	OderRepo interface {
-		GetAllOrder(ctx context.Context) (users []entity.Order, err error)
-		CreateOrderItem(ctx context.Context, item dto.CreateOderItem) (id string, err error)
+		GetAllOrder(ctx context.Context) (order []entity.Order, err error)
+		CreateOrderItem(ctx context.Context, item dto.CreateOrderItemRequest, userId string) (id string, err error)
 		UpdateOrderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error)
 		DeleteOrderItem(ctx context.Context, id string) error
 	}
