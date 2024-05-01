@@ -12,7 +12,7 @@ type OrderMenuUseCase struct {
 	repo OrderMenuRepo
 }
 
-func NewOrderMenuUseCase(r OderRepo) *OrderMenuUseCase {
+func NewOrderMenuUseCase(r OrderMenuRepo) *OrderMenuUseCase {
 	return &OrderMenuUseCase{
 		repo: r,
 	}
@@ -36,8 +36,8 @@ func (mc *OrderMenuUseCase) UpdateOrderMenuItem(ctx context.Context, item dto.Up
 	return order, nil
 }
 
-func (mc *OrderUseCase) DeleteOrderItem(ctx context.Context, id string) error {
-	err := mc.repo.DeleteOrderItem(ctx, id)
+func (mc *OrderMenuUseCase) DeleteOrderItem(ctx context.Context, id string) error {
+	err := mc.repo.DeleteOrderMenuItem(ctx, id)
 	if err != nil {
 		return fmt.Errorf("OrderUseCase - DeleteOrderItem: %w", err)
 	}
