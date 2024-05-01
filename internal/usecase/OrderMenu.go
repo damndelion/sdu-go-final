@@ -36,7 +36,11 @@ func (mc *OrderMenuUseCase) UpdateOrderMenuItem(ctx context.Context, item dto.Up
 	return orderMenu, nil
 }
 
+<<<<<<< HEAD
 func (mc *OrderMenuUseCase) DeleteOrderMenuItem(ctx context.Context, id string) error {
+=======
+func (mc *OrderMenuUseCase) DeleteOrderItem(ctx context.Context, id string) error {
+>>>>>>> 24ac45a38011c6ec0a7811c86d5d0682007790c5
 	err := mc.repo.DeleteOrderMenuItem(ctx, id)
 	if err != nil {
 		return fmt.Errorf("OrderMenuUseCase - DeleteOrderMenuItem: %w", err)

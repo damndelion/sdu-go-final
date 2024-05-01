@@ -30,14 +30,14 @@ func (r *OrderRepo) GetAllOrder(ctx context.Context) (order []entity.Order, err 
 	return order, nil
 }
 
-func (r *OrderRepo) CreateOrderItem(ctx context.Context, item dto.CreateOrderItemRequest, userID string) (id string, err error) {
+func (r *OrderRepo) CreateOrderItem(ctx context.Context, items dto.CreateOrderItemRequest, userID string) (id string, err error) {
 	orderUuid, err := uuid.NewRandom()
 	if err != nil {
 		return "", err
 	}
-	var orderItemData dto.CreateOrderItemRequest
+
 	totalPrice := 0
-	for _, item := range orderItemData.Items {
+	for _, item := range items.Items {
 		totalPrice += item.Price
 	}
 	order := entity.Order{
@@ -46,14 +46,14 @@ func (r *OrderRepo) CreateOrderItem(ctx context.Context, item dto.CreateOrderIte
 		Status:      "crated",
 		TotalPrice:  totalPrice,
 		Timestamp:   time.Now(),
-		PaymentType: item.PaymentType,
+		PaymentType: items.PaymentType,
 	}
 
-	orderMenuUuid, err := uuid.NewRandom()
-	if err != nil {
-		return "", err
-	}
-	for _, item := range orderItemData.Items {
+	for _, item := range items.Items {
+		orderMenuUuid, err := uuid.NewRandom()
+		if err != nil {
+			return "", err
+		}
 		orderMenu := entity.OrderMenu{
 			ID:      orderMenuUuid.String(),
 			OrderID: orderUuid.String(),
