@@ -116,7 +116,7 @@ func (r *orderRoutes) deleteOrderItem(c *gin.Context) {
 
 	err := r.o.DeleteOrderItem(c.Request.Context(), id)
 	if err != nil {
-		r.l.Error(err, "http - v1 - order - deleteMenuItem")
+		r.l.Error(err, "http - v1 - order - deleteOrderItem")
 		errorResponse(c, http.StatusInternalServerError, "database problems")
 
 		return

@@ -61,4 +61,18 @@ type (
 		UpdateOrderMenuItem(ctx context.Context, item dto.UpdateOrderMenuItem) (id string, err error)
 		DeleteOrderMenuItem(ctx context.Context, id string) error
 	}
+
+	Stock interface {
+		GetStock(ctx context.Context) (users []entity.Stock, err error)
+		CreateStockItem(ctx context.Context, item dto.CreateStockItem) (id string, err error)
+		UpdateStockItem(ctx context.Context, item dto.UpdateStockItem) (id string, err error)
+		DeleteStockItem(ctx context.Context, id string) error
+	}
+
+	StockRepo interface {
+		GetAllStock(ctx context.Context) (users []entity.Stock, err error)
+		CreateStockItem(ctx context.Context, item dto.CreateStockItem) (id string, err error)
+		UpdateStockItem(ctx context.Context, item dto.UpdateStockItem) (id string, err error)
+		DeleteStockItem(ctx context.Context, id string) error
+	}
 )
