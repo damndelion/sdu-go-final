@@ -50,4 +50,15 @@ type (
 		UpdateOrderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error)
 		DeleteOrderItem(ctx context.Context, id string) error
 	}
+
+	OrderMenu interface {
+		GetOrderMenu(ctx context.Context) (users []entity.OrderMenu, err error)
+		UpdateOrderMenuItem(ctx context.Context, item dto.UpdateOrderMenuItem) (id string, err error)
+		DeleteOrderMenuItem(ctx context.Context, id string) error
+	}
+	OrderMenuRepo interface {
+		GetAllOrderMenu(ctx context.Context) (users []entity.OrderMenu, err error)
+		UpdateOrderMenuItem(ctx context.Context, item dto.UpdateOrderMenuItem) (id string, err error)
+		DeleteOrderMenuItem(ctx context.Context, id string) error
+	}
 )
