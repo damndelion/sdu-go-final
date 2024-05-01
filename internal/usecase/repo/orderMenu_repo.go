@@ -17,7 +17,7 @@ func NewOderMenuRepo(pg *gorm.DB) *OrderMenuRepo {
 	return &OrderMenuRepo{pg}
 }
 
-func (r *OrderRepo) GetAllOrderMenu(ctx context.Context) (orderMenu []entity.OrderMenu, err error) {
+func (r *OrderMenuRepo) GetAllOrderMenu(ctx context.Context) (orderMenu []entity.OrderMenu, err error) {
 	res := r.db.Find(&orderMenu)
 	if res.Error != nil {
 		return nil, res.Error

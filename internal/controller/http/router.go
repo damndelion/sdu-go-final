@@ -23,7 +23,7 @@ import (
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /api
-func NewRouter(handler *gin.Engine, l *logrus.Logger, o usecase.Order, u usecase.User, a usecase.Auth, m usecase.Menu, cfg *config.Config) {
+func NewRouter(handler *gin.Engine, l *logrus.Logger, om usecase.OrderMenu, o usecase.Order, u usecase.User, a usecase.Auth, m usecase.Menu, cfg *config.Config) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
@@ -45,6 +45,7 @@ func NewRouter(handler *gin.Engine, l *logrus.Logger, o usecase.Order, u usecase
 		newAuthRoutes(h, a, l)
 		newMenuRoutes(h, m, l, cfg.JWT.SecretKey)
 		newOrderRoutes(h, o, l, cfg.JWT.SecretKey)
+		newOrderMenuRoutes(h, om, l, cfg.JWT.SecretKey)
 
 	}
 }

@@ -40,7 +40,7 @@ func newOrderRoutes(handler *gin.RouterGroup, o usecase.Order, l *logrus.Logger,
 // @Failure     500 {object} response
 // @Router      /menu/all [get]
 func (r *orderRoutes) getAll(c *gin.Context) {
-	menu, err := r.o.GetOrder(c.Request.Context())
+	order, err := r.o.GetOrder(c.Request.Context())
 	if err != nil {
 		r.l.Error(err, "http - v1 - menu")
 		errorResponse(c, http.StatusInternalServerError, "database problems")
@@ -48,7 +48,7 @@ func (r *orderRoutes) getAll(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, menu)
+	c.JSON(http.StatusOK, order)
 }
 
 // @Summary     Create menu item
