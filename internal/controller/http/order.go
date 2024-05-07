@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"github.com/damndelion/sdu-go-final/internal/controller/http/dto"
 	"github.com/damndelion/sdu-go-final/internal/controller/middleware"
 	"github.com/gin-gonic/gin"
@@ -21,6 +22,10 @@ func newOrderRoutes(handler *gin.RouterGroup, o usecase.Order, l *logrus.Logger,
 	h := handler.Group("/order")
 	{
 		h.GET("/all", r.getAll)
+
+		h.Use(middleware.JwtVerify(key))
+		h.GET("/user/all", r.getUserAllOrders)
+		h.GET("/user/current", r.getUserCurrentOrders)
 
 		h.Use(middleware.AdminVerify(key))
 		h.POST("", r.createOrderItem)
@@ -51,6 +56,41 @@ func (r *orderRoutes) getAll(c *gin.Context) {
 	c.JSON(http.StatusOK, order)
 }
 
+// @Summary     Get menu
+// @Description Show menu
+// @ID          Menu-all
+// @Tags  	    Menu
+// @Accept      json
+// @Produce     json
+// @Success     200 {object} entity.Menu
+// @Failure     500 {object} response
+// @Router      /menu/all [get]
+func (r *orderRoutes) getUserCurrentOrders(c *gin.Context) {
+	userId, _ := c.Get("user_id")
+	order, err := r.o.GetUserCurrentOrder(c.Request.Context(), userId.(string))
+	if err != nil {
+		r.l.Error(err, "http - v1 - menu")
+		errorResponse(c, http.StatusInternalServerError, "database problems")
+
+		return
+	}
+
+	c.JSON(http.StatusOK, order)
+}
+
+func (r *orderRoutes) getUserAllOrders(c *gin.Context) {
+	userId, _ := c.Get("user_id")
+	order, err := r.o.GetUserCurrentOrder(c.Request.Context(), userId.(string))
+	if err != nil {
+		r.l.Error(err, "http - v1 - menu")
+		errorResponse(c, http.StatusInternalServerError, "database problems")
+
+		return
+	}
+
+	c.JSON(http.StatusOK, order)
+}
+
 // @Summary     Create menu item
 // @Description Create menu item
 // @ID          Menu-create
@@ -65,6 +105,7 @@ func (r *orderRoutes) createOrderItem(c *gin.Context) {
 	var orderItemData dto.CreateOrderItemRequest
 	err := c.ShouldBindJSON(&orderItemData)
 	userId, _ := c.Get("user_id")
+	fmt.Println(orderItemData)
 	id, err := r.o.CreateOrderItem(c.Request.Context(), orderItemData, userId.(string))
 	if err != nil {
 		r.l.Error(err, "http - v1 - order - createOrderItem")

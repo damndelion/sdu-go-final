@@ -27,6 +27,23 @@ func (mc *OrderUseCase) GetOrder(ctx context.Context) ([]entity.Order, error) {
 	return order, nil
 }
 
+func (mc *OrderUseCase) GetUserCurrentOrder(ctx context.Context, userId string) ([]entity.Order, error) {
+	order, err := mc.repo.GetUserCurrentOrders(ctx, userId)
+	if err != nil {
+		return nil, fmt.Errorf("OrderUseCase - GetUserCurrentOrder: %w", err)
+	}
+
+	return order, nil
+}
+func (mc *OrderUseCase) GetUserAllOrder(ctx context.Context, userId string) ([]entity.Order, error) {
+	order, err := mc.repo.GetUserCurrentOrders(ctx, userId)
+	if err != nil {
+		return nil, fmt.Errorf("OrderUseCase - GetUserAllOrder: %w", err)
+	}
+
+	return order, nil
+}
+
 func (mc *OrderUseCase) CreateOrderItem(ctx context.Context, item dto.CreateOrderItemRequest, userId string) (id string, err error) {
 	order, err := mc.repo.CreateOrderItem(ctx, item, userId)
 	if err != nil {

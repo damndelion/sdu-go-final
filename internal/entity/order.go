@@ -11,5 +11,5 @@ type Order struct {
 	Timestamp   time.Time `gorm:"not null"`
 	PaymentType string    `gorm:"not null"`
 
-	Menu []*Menu `gorm:"many2many:order_menus"`
+	MenuItems []Menu `gorm:"many2many:order_menus"`
 }

@@ -30,6 +30,35 @@ func (r *OrderRepo) GetAllOrder(ctx context.Context) (order []entity.Order, err 
 	return order, nil
 }
 
+func (r *OrderRepo) GetUserCurrentOrders(ctx context.Context, userId string) (order []entity.Order, err error) {
+	err = r.db.Preload("MenuItems").Preload("User").Find(&order).Where("user_id = ? AND (status = ? OR status = ?)", userId, "created", "inprogress").Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return order, nil
+}
+
+func (r *OrderRepo) GetUserAllOrders(ctx context.Context, userId string) (order []entity.Order, err error) {
+	err = r.db.Preload("MenuItems").Preload("User").Find(&order).Where("user_id = ?", userId).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return order, nil
+}
+
+func (r *OrderRepo) GetOrderByID(ctx context.Context, id string) (order []entity.Order, err error) {
+	res := r.db.Find(&order).Where("id = ?", id)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return order, nil
+}
+
 func (r *OrderRepo) CreateOrderItem(ctx context.Context, items dto.CreateOrderItemRequest, userID string) (id string, err error) {
 	orderUuid, err := uuid.NewRandom()
 	if err != nil {
@@ -43,19 +72,24 @@ func (r *OrderRepo) CreateOrderItem(ctx context.Context, items dto.CreateOrderIt
 	order := entity.Order{
 		ID:          orderUuid.String(),
 		UserID:      userID,
-		Status:      "crated",
+		Status:      "created",
 		TotalPrice:  totalPrice,
 		Timestamp:   time.Now(),
 		PaymentType: items.PaymentType,
 	}
 
+	res := r.db.Create(&order)
+	if res.Error != nil {
+		return "", res.Error
+	}
+
 	for _, item := range items.Items {
-		orderMenuUuid, err := uuid.NewRandom()
+
 		if err != nil {
 			return "", err
 		}
 		orderMenu := entity.OrderMenu{
-			ID:      orderMenuUuid.String(),
+
 			OrderID: orderUuid.String(),
 			MenuID:  item.MenuID,
 		}
@@ -63,10 +97,6 @@ func (r *OrderRepo) CreateOrderItem(ctx context.Context, items dto.CreateOrderIt
 		if create.Error != nil {
 			return "", create.Error
 		}
-	}
-	res := r.db.Create(&order)
-	if res.Error != nil {
-		return "", res.Error
 	}
 
 	return order.ID, nil

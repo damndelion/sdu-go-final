@@ -42,6 +42,8 @@ type (
 		CreateOrderItem(ctx context.Context, item dto.CreateOrderItemRequest, userID string) (id string, err error)
 		UpdateOrderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error)
 		DeleteOrderItem(ctx context.Context, id string) error
+		GetUserAllOrder(ctx context.Context, userId string) ([]entity.Order, error)
+		GetUserCurrentOrder(ctx context.Context, userId string) ([]entity.Order, error)
 	}
 
 	OderRepo interface {
@@ -49,6 +51,8 @@ type (
 		CreateOrderItem(ctx context.Context, item dto.CreateOrderItemRequest, userId string) (id string, err error)
 		UpdateOrderItem(ctx context.Context, item dto.UpdateOrderItem) (id string, err error)
 		DeleteOrderItem(ctx context.Context, id string) error
+		GetUserCurrentOrders(ctx context.Context, userId string) (order []entity.Order, err error)
+		GetUserAllOrders(ctx context.Context, userId string) (order []entity.Order, err error)
 	}
 
 	OrderMenu interface {
