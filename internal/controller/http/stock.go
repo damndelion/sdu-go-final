@@ -20,9 +20,9 @@ func newStockRoutes(handler *gin.RouterGroup, s usecase.Stock, l *logrus.Logger,
 
 	h := handler.Group("/stock")
 	{
-		h.GET("/all", r.getAll)
-
+		// Only admin can access
 		h.Use(middleware.AdminVerify(key))
+		h.GET("/all", r.getAll)
 		h.POST("", r.createStockItem)
 		h.PUT("/:id", r.updateStockItem)
 		h.DELETE("/:id", r.deleteStockItem)

@@ -20,7 +20,11 @@ func newUserRoutes(handler *gin.RouterGroup, t usecase.User, l *logrus.Logger, k
 
 	h := handler.Group("/user")
 	{
+
 		h.Use(middleware.JwtVerify(key))
+		h.GET("/profile", r.getAll)
+
+		h.Use(middleware.AdminVerify(key))
 		h.GET("/all", r.getAll)
 
 	}
@@ -37,6 +41,28 @@ func newUserRoutes(handler *gin.RouterGroup, t usecase.User, l *logrus.Logger, k
 // @Router      /user/all [get]
 func (r *userRoutes) getAll(c *gin.Context) {
 	users, err := r.t.GetUsers(c.Request.Context())
+	if err != nil {
+		r.l.Error(err, "http - v1 - user")
+		errorResponse(c, http.StatusInternalServerError, "database problems")
+
+		return
+	}
+
+	c.JSON(http.StatusOK, users)
+}
+
+// @Summary     Get user profile
+// @Description Show user's personal profile information
+// @ID          User
+// @Tags  	    User
+// @Accept      json
+// @Produce     json
+// @Success     200 {object} entity.User
+// @Failure     500 {object} response
+// @Router      /user/{id} [get]
+func (r *userRoutes) getById(c *gin.Context) {
+	userId, _ := c.Get("user_id")
+	users, err := r.t.GetUserByID(c.Request.Context(), userId.(string))
 	if err != nil {
 		r.l.Error(err, "http - v1 - user")
 		errorResponse(c, http.StatusInternalServerError, "database problems")

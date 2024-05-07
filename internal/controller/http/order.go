@@ -21,16 +21,18 @@ func newOrderRoutes(handler *gin.RouterGroup, o usecase.Order, l *logrus.Logger,
 
 	h := handler.Group("/order")
 	{
-		h.GET("/all", r.getAll)
-
+		// All authorized users can access
 		h.Use(middleware.JwtVerify(key))
 		h.GET("/user/all", r.getUserAllOrders)
 		h.GET("/user/current", r.getUserCurrentOrders)
-
-		h.Use(middleware.AdminVerify(key))
 		h.POST("", r.createOrderItem)
 		h.PUT("/:id", r.updateOrderItem)
 		h.DELETE("/:id", r.deleteOrderItem)
+
+		// Only admin can access
+		h.Use(middleware.WorkerVerify(key))
+		h.GET("/all", r.getAll)
+		h.GET("/all/current", r.getAllCurrent)
 
 	}
 }
@@ -46,6 +48,27 @@ func newOrderRoutes(handler *gin.RouterGroup, o usecase.Order, l *logrus.Logger,
 // @Router      /menu/all [get]
 func (r *orderRoutes) getAll(c *gin.Context) {
 	order, err := r.o.GetOrder(c.Request.Context())
+	if err != nil {
+		r.l.Error(err, "http - v1 - menu")
+		errorResponse(c, http.StatusInternalServerError, "database problems")
+
+		return
+	}
+
+	c.JSON(http.StatusOK, order)
+}
+
+// @Summary     Get menu
+// @Description Show menu
+// @ID          Menu-all
+// @Tags  	    Menu
+// @Accept      json
+// @Produce     json
+// @Success     200 {object} entity.Menu
+// @Failure     500 {object} response
+// @Router      /menu/all [get]
+func (r *orderRoutes) getAllCurrent(c *gin.Context) {
+	order, err := r.o.GetCurrentOrder(c.Request.Context())
 	if err != nil {
 		r.l.Error(err, "http - v1 - menu")
 		errorResponse(c, http.StatusInternalServerError, "database problems")

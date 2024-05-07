@@ -22,8 +22,11 @@ func newMenuRoutes(handler *gin.RouterGroup, t usecase.Menu, l *logrus.Logger, k
 
 	h := handler.Group("/menu")
 	{
+		// All authorized users can access
+		h.Use(middleware.JwtVerify(key))
 		h.GET("/all", r.getAll)
 
+		// Only admin can access
 		h.Use(middleware.AdminVerify(key))
 		h.POST("", r.createMenuItem)
 		h.PUT("/:id", r.updateMenuItem)
