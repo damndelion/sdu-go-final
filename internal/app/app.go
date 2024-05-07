@@ -77,7 +77,6 @@ func Run(cfg *config.Config) {
 		log.Error(fmt.Errorf("app - Run - httpServer.Notify: %w", err))
 	}
 
-	// Shutdown
 	err = httpServer.Shutdown()
 	if err != nil {
 		log.Error(fmt.Errorf("app - Run - httpServer.Shutdown: %w", err))
