@@ -40,7 +40,8 @@ func (r *OrderRepo) GetAllCurrentOrder(ctx context.Context) (order []entity.Orde
 }
 
 func (r *OrderRepo) GetUserCurrentOrders(ctx context.Context, userId string) (order []entity.Order, err error) {
-	err = r.db.Preload("MenuItems").Preload("User").Find(&order).Where("user_id = ? AND (status = ? OR status = ?)", userId, "created", "inprogress").Error
+	err = r.db.Preload("MenuItems").Preload("User").Find(&order).
+		Where("user_id = ? AND (status = ? OR status = ?)", userId, "created", "inprogress").Error
 
 	if err != nil {
 		return nil, err

@@ -29,7 +29,7 @@ func newOrderRoutes(handler *gin.RouterGroup, o usecase.Order, l *logrus.Logger,
 		h.PUT("/:id", r.updateOrderItem)
 		h.DELETE("/:id", r.deleteOrderItem)
 
-		// Only admin can access
+		// worker can access
 		h.Use(middleware.WorkerVerify(key))
 		h.GET("/all", r.getAll)
 		h.GET("/all/current", r.getAllCurrent)
@@ -37,15 +37,15 @@ func newOrderRoutes(handler *gin.RouterGroup, o usecase.Order, l *logrus.Logger,
 	}
 }
 
-// @Summary     Get menu
-// @Description Show menu
-// @ID          Menu-all
-// @Tags  	    Menu
+// @Summary     Get all Orders
+// @Description Get all Orders
+// @ID          Order-all
+// @Tags  	    Order
 // @Accept      json
 // @Produce     json
-// @Success     200 {object} entity.Menu
+// @Success     200 {object} []entity.Order
 // @Failure     500 {object} response
-// @Router      /menu/all [get]
+// @Router      /order/all [get]
 func (r *orderRoutes) getAll(c *gin.Context) {
 	order, err := r.o.GetOrder(c.Request.Context())
 	if err != nil {
@@ -58,15 +58,15 @@ func (r *orderRoutes) getAll(c *gin.Context) {
 	c.JSON(http.StatusOK, order)
 }
 
-// @Summary     Get menu
-// @Description Show menu
-// @ID          Menu-all
-// @Tags  	    Menu
+// @Summary     Get all current order
+// @Description Get all current order
+// @ID          Order-all-current
+// @Tags  	    Order
 // @Accept      json
 // @Produce     json
-// @Success     200 {object} entity.Menu
+// @Success     200 {object} []entity.Order
 // @Failure     500 {object} response
-// @Router      /menu/all [get]
+// @Router      /order/all/current [get]
 func (r *orderRoutes) getAllCurrent(c *gin.Context) {
 	order, err := r.o.GetCurrentOrder(c.Request.Context())
 	if err != nil {
@@ -79,15 +79,15 @@ func (r *orderRoutes) getAllCurrent(c *gin.Context) {
 	c.JSON(http.StatusOK, order)
 }
 
-// @Summary     Get menu
-// @Description Show menu
-// @ID          Menu-all
-// @Tags  	    Menu
+// @Summary     Get all current user order
+// @Description Get all current user order
+// @ID          Order-all-current-user
+// @Tags  	    Order
 // @Accept      json
 // @Produce     json
-// @Success     200 {object} entity.Menu
+// @Success     200 {object} []entity.Order
 // @Failure     500 {object} response
-// @Router      /menu/all [get]
+// @Router      /order/user/current [get]
 func (r *orderRoutes) getUserCurrentOrders(c *gin.Context) {
 	userId, _ := c.Get("user_id")
 	order, err := r.o.GetUserCurrentOrder(c.Request.Context(), userId.(string))
@@ -101,6 +101,15 @@ func (r *orderRoutes) getUserCurrentOrders(c *gin.Context) {
 	c.JSON(http.StatusOK, order)
 }
 
+// @Summary     Get all  user order
+// @Description Get all  user order
+// @ID          Order-all--user
+// @Tags  	    Order
+// @Accept      json
+// @Produce     json
+// @Success     200 {object} []entity.Order
+// @Failure     500 {object} response
+// @Router      /order/user/all [get]
 func (r *orderRoutes) getUserAllOrders(c *gin.Context) {
 	userId, _ := c.Get("user_id")
 	order, err := r.o.GetUserCurrentOrder(c.Request.Context(), userId.(string))
@@ -114,15 +123,15 @@ func (r *orderRoutes) getUserAllOrders(c *gin.Context) {
 	c.JSON(http.StatusOK, order)
 }
 
-// @Summary     Create menu item
-// @Description Create menu item
-// @ID          Menu-create
-// @Tags  	    Menu
+// @Summary     Create Order
+// @Description Create Order
+// @ID          Order-create
+// @Tags  	    Order
 // @Accept      json
 // @Produce     json
 // @Success     200 {object} string
 // @Failure     500 {object} response
-// @Router      /menu [post]
+// @Router      /order [post]
 func (r *orderRoutes) createOrderItem(c *gin.Context) {
 
 	var orderItemData dto.CreateOrderItemRequest
@@ -140,15 +149,15 @@ func (r *orderRoutes) createOrderItem(c *gin.Context) {
 	c.JSON(http.StatusOK, id)
 }
 
-// @Summary     Update menu item
-// @Description Update menu item
-// @ID          Menu-update
-// @Tags  	    Menu
+// @Summary     Update order
+// @Description Update order
+// @ID          Order-update
+// @Tags  	    Order
 // @Accept      json
 // @Produce     json
 // @Success     200 {object} string
 // @Failure     500 {object} response
-// @Router      /menu [put]
+// @Router      /order/{id} [put]
 func (r *orderRoutes) updateOrderItem(c *gin.Context) {
 	id := c.Param("id")
 
@@ -166,15 +175,15 @@ func (r *orderRoutes) updateOrderItem(c *gin.Context) {
 	c.JSON(http.StatusOK, id)
 }
 
-// @Summary     Delete menu item
-// @Description Delete menu item
-// @ID          Menu-delete
-// @Tags  	    Menu
+// @Summary     Delete order
+// @Description Delete order
+// @ID          Order-delete
+// @Tags  	    Order
 // @Accept      json
 // @Produce     json
 // @Success     200
 // @Failure     500
-// @Router      /menu [delete]
+// @Router      /order/{id} [delete]
 func (r *orderRoutes) deleteOrderItem(c *gin.Context) {
 	id := c.Param("id")
 

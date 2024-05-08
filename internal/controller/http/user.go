@@ -32,7 +32,7 @@ func newUserRoutes(handler *gin.RouterGroup, t usecase.User, l *logrus.Logger, k
 
 // @Summary     Get all users
 // @Description Show all users
-// @ID          User
+// @ID          User-all
 // @Tags  	    User
 // @Accept      json
 // @Produce     json
@@ -53,7 +53,7 @@ func (r *userRoutes) getAll(c *gin.Context) {
 
 // @Summary     Get user profile
 // @Description Show user's personal profile information
-// @ID          User
+// @ID          User-by-id
 // @Tags  	    User
 // @Accept      json
 // @Produce     json

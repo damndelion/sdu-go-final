@@ -10,9 +10,4 @@ swag-init: ### swag init
 	swag init -g internal/controller/http/router.go
 .PHONY: swag-init
 
-linter-golangci: ### check by golangci linter
-	golangci-lint run
-.PHONY: linter-golangci
-
-
 

@@ -31,7 +31,7 @@ func Run(cfg *config.Config) {
 	}
 	defer postgres.Close(db)
 
-	err = db.AutoMigrate(&entity.User{}, &entity.Menu{}, &entity.Order{})
+	err = db.AutoMigrate(&entity.User{}, &entity.Menu{}, &entity.Order{}, &entity.Stock{})
 	if err != nil {
 		log.Error("failed to migrate")
 		return

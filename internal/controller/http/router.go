@@ -18,8 +18,8 @@ import (
 
 // NewRouter -.
 // Swagger spec:
-// @title       Go Clean Template API
-// @description Using a translation service as an example
+// @title       University canteen management api
+// @description University canteen management api
 // @version     1.0
 // @host        localhost:8080
 // @BasePath    /api

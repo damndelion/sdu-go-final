@@ -8,8 +8,33 @@ definitions:
         type: string
       name:
         type: string
+      order:
+        items:
+          $ref: '#/definitions/entity.Order'
+        type: array
       price:
         type: integer
+    type: object
+  entity.Order:
+    properties:
+      id:
+        type: string
+      menuItems:
+        items:
+          $ref: '#/definitions/entity.Menu'
+        type: array
+      paymentType:
+        type: string
+      status:
+        type: string
+      timestamp:
+        type: string
+      totalPrice:
+        type: integer
+      user:
+        $ref: '#/definitions/entity.User'
+      userID:
+        type: string
     type: object
   entity.User:
     properties:
@@ -33,8 +58,8 @@ definitions:
 host: localhost:8080
 info:
   contact: {}
-  description: Using a translation service as an example
-  title: Go Clean Template API
+  description: University canteen management api
+  title: University canteen management api
   version: "1.0"
 paths:
   /auth/login:
@@ -143,12 +168,175 @@ paths:
       summary: Get menu
       tags:
       - Menu
+  /order:
+    post:
+      consumes:
+      - application/json
+      description: Create Order
+      operationId: Order-create
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Create Order
+      tags:
+      - Order
+  /order/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete order
+      operationId: Order-delete
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Internal Server Error
+      summary: Delete order
+      tags:
+      - Order
+    put:
+      consumes:
+      - application/json
+      description: Update order
+      operationId: Order-update
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Update order
+      tags:
+      - Order
+  /order/all:
+    get:
+      consumes:
+      - application/json
+      description: Get all Orders
+      operationId: Order-all
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Order'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Get all Orders
+      tags:
+      - Order
+  /order/all/current:
+    get:
+      consumes:
+      - application/json
+      description: Get all current order
+      operationId: Order-all-current
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Order'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Get all current order
+      tags:
+      - Order
+  /order/user/all:
+    get:
+      consumes:
+      - application/json
+      description: Get all  user order
+      operationId: Order-all--user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Order'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Get all  user order
+      tags:
+      - Order
+  /order/user/current:
+    get:
+      consumes:
+      - application/json
+      description: Get all current user order
+      operationId: Order-all-current-user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Order'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Get all current user order
+      tags:
+      - Order
+  /user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Show user's personal profile information
+      operationId: User-by-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.response'
+      summary: Get user profile
+      tags:
+      - User
   /user/all:
     get:
       consumes:
       - application/json
       description: Show all users
-      operationId: User
+      operationId: User-all
       produces:
       - application/json
       responses:
