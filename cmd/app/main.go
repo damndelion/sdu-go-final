@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	// Configuration test
+	// Configuration test test
 	cfg, err := config.NewConfig()
 	if err != nil {
 		logrus.Fatalf("Config error: %s", err)
